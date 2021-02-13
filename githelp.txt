@@ -1,0 +1,7 @@
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/burkebb/BYUCS235.git
+// git remote remove origin
+git push -u origin main
