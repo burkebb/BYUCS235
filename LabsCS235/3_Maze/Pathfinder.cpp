@@ -101,7 +101,7 @@ bool Pathfinder::importMaze(string file_name) {
 		}
 		//if (rowcount != ROW_SIZE * DEPTH - 1) return false;
 		//cout << "ROWCOUNT" << rowcount << endl;
-		cout << "TOKENCOUNT " << tokencount << endl;
+		//cout << "TOKENCOUNT " << tokencount << endl;
 		if(tokencount != ROW_SIZE * COL_SIZE * DEPTH) return false;
 
 		if (tempMaze[0][0][0] == BACKGROUND && tempMaze[ROW_SIZE - 1][COL_SIZE - 1][DEPTH - 1] == BACKGROUND) {
@@ -121,5 +121,57 @@ bool Pathfinder::importMaze(string file_name) {
 };
 
 vector<string> Pathfinder::solveMaze() {
+	//cout << "CHECK 1" << endl;
+	if (!solution.empty()) solution.clear();
+	
+	findPath(0,0,0);
+	//cout << "CHECK 9" << endl;
+	for(int z = 0; z < DEPTH; z++) {
+		for (int y = 0; y < COL_SIZE; y++) {
+			for (int x = 0; x < ROW_SIZE; x++) {
+				if (maze_grid[x][y][z] == TEMPORARY) {
+					maze_grid[x][y][z] = BACKGROUND;
+				}
+			}
+		}
+	}
 
-}; //hi there
+	return solution;
+};
+
+//recursive piece 
+bool Pathfinder::findPath(int x, int y, int z) {
+	
+	//solution.push_back("(" + to_string(x) + ", " + to_string(y) + ", " + to_string(z) + ")");
+
+	if (x<0 || x>=ROW_SIZE || y<0 || y>=COL_SIZE || z<0 || z>=DEPTH) {
+		//solution.pop_back();
+		return false;
+	}
+	//if (maze_grid[x][y][z] != BACKGROUND) {
+	if (maze_grid[x][y][z] == WALL || maze_grid[x][y][z] == TEMPORARY) {
+		//solution.pop_back();
+		return false;
+	}
+	if(x==ROW_SIZE-1 && y==COL_SIZE-1 && z==DEPTH-1) {
+		//maze_grid[x][y][z] = TEMPORARY;
+		solution.push_back("(" + to_string(y) + ", " + to_string(x) + ", " + to_string(z) + ")");
+		cout << "CHECK TRUE" << endl;
+		return true;
+	}
+	//switch x and y
+	solution.push_back("(" + to_string(y) + ", " + to_string(x) + ", " + to_string(z) + ")");
+	maze_grid[x][y][z] = TEMPORARY;
+
+	if (findPath(x-1, y, z) || findPath(x+1, y, z) || findPath(x, y-1, z) || findPath(x, y+1, z) || findPath(x, y, z-1) || findPath(x, y, z+1)) {
+		//solution.push_back("(" + to_string(x) + ", " + to_string(y) + ", " + to_string(z) + ")");
+		return true;
+	}
+	else {
+		solution.pop_back();
+		//maze_grid[x][y][z] = TEMPORARY;
+		return false;
+	}
+	return false;
+
+};

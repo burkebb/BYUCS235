@@ -85,6 +85,7 @@ class Pathfinder : public PathfinderInterface
 		*				A solution to the current maze, or an empty vector if none exists
 		*/
 		vector<string> solveMaze();
+		bool findPath(int x, int y, int z);
 		//-----------------------------------------------------------------------------------------
 	private:
 		static const int ROW_SIZE = 5;
