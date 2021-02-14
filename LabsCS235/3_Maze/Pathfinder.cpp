@@ -159,7 +159,7 @@ bool Pathfinder::findPath(int x, int y, int z) {
 		cout << "CHECK TRUE" << endl;
 		return true;
 	}
-	//switch x and y
+	//switched x and y
 	solution.push_back("(" + to_string(y) + ", " + to_string(x) + ", " + to_string(z) + ")");
 	maze_grid[x][y][z] = TEMPORARY;
 
