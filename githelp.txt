@@ -1,7 +1,7 @@
 git init
-git add README.md
+git add [insert stuff]
 git commit -m "first commit"
-git branch -M main
+git branch -M main // does this set tracking information?
 git remote add origin https://github.com/burkebb/BYUCS235.git
 // git remote remove origin
 git push -u origin main
